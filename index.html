@@ -24,8 +24,13 @@
 
 	<div class="jumbotron">
 
-		<button class="button" ng-click="load()">Load</button>
+		<form class="form-group" ng-submit="go()">
+			<label>Choose a Bus Stop</label>
+			<input type="text" class="form-control" ng-model="main.searchQuery">
+			<button type="submit" class="button">Submit</button>
+		</form>
 
+		<h2> Searching for: {{ main.searchQuery }} </h2>
 		<h2> {{ main.message }} </h2>
 		<h2>Last refreshed at: {{ main.accessedTime }} </h2>
 		<h2>Showing departures from {{ main.busStop }} </h2>
@@ -39,7 +44,9 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="bus in main.buses">
-					<td> {{ bus.route.route_color}} </td>
+					<td> 
+						<div style="background-color: #{{bus.route.route_color}}; width: 10px; height:10px; border-radius:5px"></div>
+					</td>
 					<td> {{ bus.headsign }} </td>
 					<td> {{ bus.expected_mins }} </td>
 				</tr>

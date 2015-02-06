@@ -6,16 +6,19 @@ var format = 'json';
 
 //CUMTD url
 var url = 'https://developer.cumtd.com/api/' + version + '/' + format + '/';
+// search url
+// var searchUrl = 'http://www.cumtd.com/autocomplete/Stops/' + version + '/' + format + '/search';
 
-//bus stop id, hard coded for now
-var stopId = 'IT';
+//bus stop id and name
+var stopId = '';
+var stopName = ''
 
 console.log('test');
 
 // name our angular app
 angular.module('cumtdApp', [])
 
-	.controller('mainController', [ '$http', '$scope', function ($http, $scope) { //function(Stuff)
+	.controller('mainController', [ '$http', '$scope', function ($http, $scope) {
 		
 		//bind this to vm (view-model)
 		var vm = this;
@@ -25,27 +28,35 @@ angular.module('cumtdApp', [])
 
 		vm.message = 'Testing CUMTD API';
 
-		vm.allData = {};
+		vm.searchQuery = '';
 
-		//gets data
+		vm.departureData = {};
+		vm.stopData = {};
 
+		// performs bus stop search
+		$scope.go = function() {
+			console.log('its going');
+
+			$http
+				.get(url + 'GetStopsBySearch', {
+					params: {
+						key: apiKey,
+						query: vm.searchQuery
+					}
+				})
+				.success(function(data){
+					vm.stopData = data;
+					console.log(stopData[0]);
+					// stopId = vm.stopData[0].stop_id;
+					// vm.stopName = vm.stopData[0].stop_name;
+					// vm.searchQuery = '';
+				})
+				.then($scope.load());
+		};
+
+		// loads departure data for a specific stop
 		$scope.load = function() {
 			console.log('load button clicked');
-
-			//get all stuff
-			// Stuff.all()
-			// 	//promise object
-			// 	.success(function(data){
-			// 		//bind the data to a controller variable
-			// 		//this comes from stuffService
-			// 		vm.stuff = data;
-			// 	});
-
-			
-			// $http.get(url + 'GetDeparturesByStop/?' + 'key=' + apiKey + '&stop_id=' + stopId)
-			// 	.then(function(data){
-			// 		vm.allData = data;
-			// 	});
 			
 			$http
 				.get(url + 'GetDeparturesByStop', {
@@ -56,22 +67,17 @@ angular.module('cumtdApp', [])
 				})
 				.success(function (data, status){
 					
-					vm.allData = data;
-					console.log(vm.allData);
+					vm.departureData = data;
+					console.log(vm.departureData);
 
-					vm.accessedTime = vm.allData.time;
+					vm.accessedTime = vm.departureData.time;
 
 					//current bus stop
-					vm.busStop = stopId;
+					vm.busStop = stopName;
 
 					//list of buses for a stop
-					vm.buses = vm.allData.departures;
+					vm.buses = vm.departureData.departures;
 				});
-
-			// console.log(vm.allData);
-
-			
-
 
 		};
 
