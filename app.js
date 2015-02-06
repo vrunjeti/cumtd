@@ -9,9 +9,7 @@ var url = 'https://developer.cumtd.com/api/' + version + '/' + format + '/';
 // search url
 // var searchUrl = 'http://www.cumtd.com/autocomplete/Stops/' + version + '/' + format + '/search';
 
-//bus stop id and name
-var stopId = '';
-var stopName = ''
+
 
 console.log('test');
 
@@ -30,6 +28,10 @@ angular.module('cumtdApp', [])
 
 		vm.searchQuery = '';
 
+		//bus stop id and name
+		vm.stopId = '';
+		vm.stopName = '';
+
 		vm.departureData = {};
 		vm.stopData = {};
 
@@ -46,12 +48,12 @@ angular.module('cumtdApp', [])
 				})
 				.success(function(data){
 					vm.stopData = data;
-					console.log(stopData[0]);
-					// stopId = vm.stopData[0].stop_id;
-					// vm.stopName = vm.stopData[0].stop_name;
-					// vm.searchQuery = '';
-				})
-				.then($scope.load());
+					console.log(vm.stopData.stops[0]);
+					vm.stopId = vm.stopData.stops[0].stop_id;
+					vm.stopName = vm.stopData.stops[0].stop_name;
+					vm.searchQuery = '';
+					$scope.load();
+				});				
 		};
 
 		// loads departure data for a specific stop
@@ -62,7 +64,7 @@ angular.module('cumtdApp', [])
 				.get(url + 'GetDeparturesByStop', {
 					params: {
 						key: apiKey,
-						stop_id: stopId
+						stop_id: vm.stopId
 					}
 				})
 				.success(function (data, status){
@@ -73,7 +75,7 @@ angular.module('cumtdApp', [])
 					vm.accessedTime = vm.departureData.time;
 
 					//current bus stop
-					vm.busStop = stopName;
+					vm.busStop = vm.stopName;
 
 					//list of buses for a stop
 					vm.buses = vm.departureData.departures;
