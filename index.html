@@ -22,23 +22,24 @@
 	<div class="jumbotron">
 
 		<h3>Search Bus Stops</h3>
-         	<div angucomplete-alt
-          		id="searchBusStops"
-          		placeholder="Search stops"
-          		pause="100"
-          		selected-object="main.searchQueryAuto"
-          		local-data="main.allStops"
-          		search-fields="stop_name"
-          		title-field="stop_name"
-          		minlength="2"
-          		input-class="form-control form-control-small"
-          		match-class="highlight"
-          		auto-match="true">
-          	</div>
+     	<div angucomplete-alt
+      		id="searchBusStops"
+      		placeholder="Search stops"
+      		pause="100"
+      		selected-object="main.busStopQuery"
+      		local-data="main.allStops"
+      		search-fields="stop_name"
+      		title-field="stop_name"
+      		minlength="2"
+      		input-class="form-control form-control-small"
+      		match-class="highlight"
+      		auto-match="true"
+      		ng-keypress="main.loadEnter($event)">
+      	</div>
       	<button type="submit" class="button" ng-click="main.load()">Submit</button>
 
-		<h2>Last refreshed at: {{ main.accessedTime }} </h2>
-		<h2>Showing departures from {{ main.busStop }} </h2>
+		<h3>Last refreshed at: {{ main.accessedTime }} </h3>
+		<h3>Showing departures from: {{ main.busStop }} </h3>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
