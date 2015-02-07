@@ -4,6 +4,11 @@ var version = 'v2.2';
 //CUMTD api url
 var url = 'https://developer.cumtd.com/api/' + version + '/json/';
 
+$(document).ready(function(){
+	$(".button-collapse").sideNav({edge: 'left'});
+	$('.collapsible').collapsible();
+});
+
 angular.module('cumtdApp', ["angucomplete-alt"])
 
 	.controller('mainController', [ '$http', function ($http) {

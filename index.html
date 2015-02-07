@@ -4,24 +4,37 @@
 	<meta charset="UTF-8">
 	<title>CUMTD Test</title>
 
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bower_components/angucomplete-alt/angucomplete-alt.css">
-	<style>
-		body { padding-top:50px; }
-	</style>
+	<link rel="stylesheet" type="text/css" href="bower_components/materialize/bin/materialize.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 	<script src="bower_components/angular/angular.min.js"></script>
-	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="app.js"></script>
-	<script src="moment.min.js"></script>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/materialize/bin/materialize.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/moment.min.js"></script>
 	<script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 </head>
 
 <body class="container" ng-app="cumtdApp" ng-controller="mainController as main">
 
-	<div class="jumbotron">
+	<!-- <div class="navbar-fixed"> -->
+		<nav>
+	      <div class="nav-wrapper">
+		      <div class="col 12">
+		      	<a href="#" class="brand-logo" id="logo">CUMTD Departures</a>
+		        <ul id="nav-mobile" class="right side-nav">
+		          <li><a href="#">Home</a></li>
+		        </ul>
+		        <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
+		      </div>
+	      </div>
+	    </nav>
+	<!-- </div> -->
+		
+	<div class="content">
 
-		<h3>Search Bus Stops</h3>
+		<h4>Search Bus Stops</h4>
      	<div angucomplete-alt
       		id="searchBusStops"
       		placeholder="Search stops"
@@ -34,13 +47,17 @@
       		input-class="form-control form-control-small"
       		match-class="highlight"
       		auto-match="true"
-      		ng-keypress="main.loadEnter($event)">
+      		ng-keypress="main.loadEnter($event)"
+      		data-activates='dropdown1'>
       	</div>
-      	<button type="submit" class="button" ng-click="main.load()">Submit</button>
+      	<button type="submit" class="btn waves-effect waves-light" ng-click="main.load()">
+      		Submit
+      		<i class="mdi-content-send right"></i>
+      	</button>
 
-		<h3>Last refreshed at: {{ main.accessedTime }} </h3>
-		<h3>Showing departures from: {{ main.busStop }} </h3>
-		<table class="table table-bordered">
+		<h5>Last refreshed at: {{ main.accessedTime }} </h5>
+		<h5>Showing departures from: {{ main.busStop }} </h5>
+		<table class="table striped">
 			<thead>
 				<tr>
 					<td>Color</td>
@@ -51,7 +68,7 @@
 			<tbody>
 				<tr ng-repeat="bus in main.buses">
 					<td> 
-						<div style="background-color: #{{bus.route.route_color}}; width: 16px; height:16px; border-radius:8px"></div>
+						<div style="background-color: #{{bus.route.route_color}}; width: 16px; height:16px; border-radius:8px; margin-left:10px"></div>
 					</td>
 					<td> {{ bus.headsign }} </td>
 					<td> {{ bus.expected_mins }} </td>
@@ -60,6 +77,6 @@
 		</table>
 
 	</div>
-	
+
 </body>
 </html>
