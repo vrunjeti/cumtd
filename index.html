@@ -17,6 +17,8 @@
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="app.js"></script>
 	<script src="userService.js"></script>
+	<script src="moment.min.js"></script>
+	<script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 </head>
 
 <!-- declare our angular application and angular controller -->
@@ -24,14 +26,22 @@
 
 	<div class="jumbotron">
 
-		<form class="form-group" ng-submit="go()">
+		<form class="form-group" ng-submit="main.go()">
 			<label>Choose a Bus Stop</label>
 			<input type="text" class="form-control" ng-model="main.searchQuery">
 			<button type="submit" class="button">Submit</button>
 		</form>
 
-		<h2> Searching for: {{ main.searchQuery }} </h2>
-		<h2> {{ main.message }} </h2>
+		<h3>Search Bus Stops</h3>
+        <div class="padded-row">
+          <div angucomplete-alt id="searchBusStops" placeholder="Search stops" pause="100" selected-object="main.searchQueryAuto" local-data="main.allStops" search-fields="name" title-field="name" minlength="2" input-class="form-control form-control-small" match-class="highlight" auto-match="true">
+          </div>
+        </div>
+
+        <button ng-click="main.searchStops()">Load All Stops</button>
+
+		<!-- <h2> Searching for: {{ main.searchQuery }} </h2> -->
+		<!-- <h2> {{ main.message }} </h2> -->
 		<h2>Last refreshed at: {{ main.accessedTime }} </h2>
 		<h2>Showing departures from {{ main.busStop }} </h2>
 		<table class="table table-bordered">
@@ -45,7 +55,7 @@
 			<tbody>
 				<tr ng-repeat="bus in main.buses">
 					<td> 
-						<div style="background-color: #{{bus.route.route_color}}; width: 10px; height:10px; border-radius:5px"></div>
+						<div style="background-color: #{{bus.route.route_color}}; width: 16px; height:16px; border-radius:8px"></div>
 					</td>
 					<td> {{ bus.headsign }} </td>
 					<td> {{ bus.expected_mins }} </td>
