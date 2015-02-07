@@ -38,7 +38,7 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 					}
 				})
 				.success(function (data, status){
-					vm.accessedTime = data.time;
+					vm.accessedTime = moment(data.time).format("MMMM Do YYYY, h:mm:ss a");
 					vm.busStop = stopName;
 					vm.buses = data.departures;
 				});
