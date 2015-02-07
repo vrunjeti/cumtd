@@ -22,15 +22,15 @@
 
 	<div class="jumbotron">
 
-		<form class="form-group" ng-submit="main.go()">
+		<!-- <form class="form-group" ng-submit="main.go()">
 			<label>Choose a Bus Stop</label>
 			<input type="text" class="form-control" ng-model="main.searchQuery">
 			<button type="submit" class="button">Submit</button>
-		</form>
+		</form> -->
 
 		<h3>Search Bus Stops</h3>
-        <div class="padded-row">
-          <div 	angucomplete-alt id="searchBusStops"
+          <div angucomplete-alt
+          		id="searchBusStops"
           		placeholder="Search stops"
           		pause="100"
           		selected-object="main.searchQueryAuto"
@@ -42,7 +42,13 @@
           		match-class="highlight"
           		auto-match="true">
           </div>
-        </div>
+          <button type="submit" class="button" ng-click="main.baaa()">Submit</button>
+
+        <!-- <div ng-show="main.searchQueryAuto">
+        	You selected: {{main.searchQueryAuto.description.stop_id}}
+        </div> -->
+
+        <!-- <h2>Searching for {{ main.searchQueryAuto }}</h2> -->
 
         <!-- <button ng-click="main.searchStops()">Load All Stops</button> -->
 

@@ -14,7 +14,7 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 		var vm = this;
 
 		vm.message = 'Testing CUMTD API';
-		vm.searchQuery = '';
+		vm.searchQuery = {};
 		vm.searchQueryAuto = '';
 		vm.stopId = '';
 		vm.stopName = '';
@@ -46,6 +46,11 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 		// 		});						
 		// };
 
+		vm.baaa = function(){
+			console.log('Stop Id:' + vm.searchQueryAuto.description.stop_id);
+			vm.load(vm.searchQueryAuto.description.stop_id, vm.searchQueryAuto.description.stop_name);
+		};
+
 		// performs bus stop search
 		vm.go = function() {
 			console.log('its going');
@@ -68,14 +73,14 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 		};
 
 		// loads departure data for a specific stop
-		vm.load = function() {
+		vm.load = function(stopIdPara, stopNamePara) {
 			console.log('load button clicked');
 			
 			$http
 				.get(url + 'GetDeparturesByStop', {
 					params: {
 						key: apiKey,
-						stop_id: vm.stopId
+						stop_id: stopIdPara
 					}
 				})
 				.success(function (data, status){
@@ -86,7 +91,7 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 					vm.accessedTime = vm.departureData.time;
 
 					//current bus stop
-					vm.busStop = vm.stopName;
+					vm.busStop = stopNamePara;
 
 					//list of buses for a stop
 					vm.buses = vm.departureData.departures;
