@@ -24,9 +24,7 @@ angular.module('cumtdApp', ["angucomplete-alt"])
 		};
 
 		vm.loadEnter = function(keyEvent) {
-			console.log('enter pressed');
 			if (keyEvent.which === 13){
-				console.log('enter actually pressed');
 		    	vm.load();
 			}
 		}
